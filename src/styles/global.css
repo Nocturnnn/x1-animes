@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "Inter", system-ui, sans-serif;
+  color: #f5ead6;
+  background: #080607;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  --gold: #d8b46a;
+  --old-gold: #8f6c35;
+  --ember: #c95736;
+  --violet: #9d6cff;
+  --ghost: #73d7ff;
+  --ink: #080607;
+  --panel: rgba(20, 14, 13, 0.78);
+  --line: rgba(231, 192, 115, 0.22);
+  --muted: #bba98d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button,
+select {
+  font: inherit;
+}
+
+button {
+  color: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
