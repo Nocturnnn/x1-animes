@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Swords, Volume2, VolumeX } from "lucide-react";
 import type { Character } from "../../types";
 import { CharacterCard } from "../CharacterCard/CharacterCard";
@@ -14,7 +15,7 @@ type BattleArenaProps = {
   onBattle: () => void;
 };
 
-export function BattleArena({ characterA, characterB, chaosMode, muted, onChaosChange, onMuteChange, onBattle }: BattleArenaProps) {
+export const BattleArena = memo(function BattleArena({ characterA, characterB, chaosMode, muted, onChaosChange, onMuteChange, onBattle }: BattleArenaProps) {
   const ready = Boolean(characterA && characterB);
 
   return (
@@ -53,4 +54,4 @@ export function BattleArena({ characterA, characterB, chaosMode, muted, onChaosC
       </Button>
     </GlowPanel>
   );
-}
+});

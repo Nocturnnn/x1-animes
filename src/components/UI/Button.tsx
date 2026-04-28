@@ -1,3 +1,4 @@
+import { memo } from "react";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -5,11 +6,11 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "ghost";
 };
 
-export function Button({ children, icon, variant = "primary", className = "", ...props }: ButtonProps) {
+export const Button = memo(function Button({ children, icon, variant = "primary", className = "", ...props }: ButtonProps) {
   return (
     <button className={`ritual-button ritual-button--${variant} ${className}`} {...props}>
       {icon}
       <span>{children}</span>
     </button>
   );
-}
+});

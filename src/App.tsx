@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Crown, Flame } from "lucide-react";
 import { characters } from "./data/characters";
-import { simulateBattle } from "./logic/battleEngine";
 import type { BattleResult, Character } from "./types";
 import { MysticBackground } from "./components/Layout/MysticBackground";
 import { BattleTable } from "./components/Layout/BattleTable";
@@ -36,6 +35,13 @@ function App() {
   const [animeFilter, setAnimeFilter] = useState("Todos");
   const [chaosMode, setChaosMode] = useState(false);
   const [muted, setMuted] = useState(true);
+  const selectedARef = useRef<Character | null>(null);
+  const selectedBRef = useRef<Character | null>(null);
+
+  useEffect(() => {
+    selectedARef.current = selectedA;
+    selectedBRef.current = selectedB;
+  }, [selectedA, selectedB]);
 
   const ranking = useMemo(() => {
     return [...characters]
@@ -47,36 +53,42 @@ function App() {
       .slice(0, 5);
   }, []);
 
-  function handleSelect(character: Character) {
+  const handleSelect = useCallback((character: Character) => {
+    const currentA = selectedARef.current;
+    const currentB = selectedBRef.current;
+
     setResult(null);
-    if (!selectedA || selectedA.id === character.id) {
+    if (!currentA || currentA.id === character.id) {
       setSelectedA(character);
       return;
     }
-    if (!selectedB || selectedB.id === character.id) {
-      if (selectedA.id !== character.id) setSelectedB(character);
+    if (!currentB || currentB.id === character.id) {
+      if (currentA.id !== character.id) setSelectedB(character);
       return;
     }
-    setSelectedA(selectedB);
+    setSelectedA(currentB);
     setSelectedB(character);
-  }
+  }, []);
 
-  function handleRandomize() {
-    const shuffled = [...characters].sort(() => Math.random() - 0.5);
-    setSelectedA(shuffled[0]);
-    setSelectedB(shuffled[1]);
+  const handleRandomize = useCallback(() => {
+    const firstIndex = Math.floor(Math.random() * characters.length);
+    let secondIndex = Math.floor(Math.random() * (characters.length - 1));
+    if (secondIndex >= firstIndex) secondIndex += 1;
+    setSelectedA(characters[firstIndex]);
+    setSelectedB(characters[secondIndex]);
     setResult(null);
-  }
+  }, []);
 
-  function handleBattle() {
+  const handleBattle = useCallback(async () => {
     if (!selectedA || !selectedB) return;
     playRitualTone(muted);
+    const { simulateBattle } = await import("./logic/battleEngine");
     setResult(simulateBattle(selectedA, selectedB, chaosMode));
-  }
+  }, [chaosMode, muted, selectedA, selectedB]);
 
-  function handleReset() {
+  const handleReset = useCallback(() => {
     setResult(null);
-  }
+  }, []);
 
   return (
     <>
@@ -86,7 +98,7 @@ function App() {
           <motion.div initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.75 }}>
             <span className="eyebrow hero-kicker">
               <Flame size={16} />
-              simulador ritualistico de cartas
+              simulador ritualistico ficticio de cartas
             </span>
             <h1>Anime X1: Mesa dos Destinos</h1>
             <p>

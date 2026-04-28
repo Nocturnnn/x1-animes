@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:wght@600;700&family=Sora:wght@400;500;600;700;800&display=swap");
 
 :root {
   color-scheme: dark;
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: "Sora", system-ui, sans-serif;
   color: #f5ead6;
   background: #080607;
   font-synthesis: none;
@@ -17,6 +17,9 @@
   --panel: rgba(20, 14, 13, 0.78);
   --line: rgba(231, 192, 115, 0.22);
   --muted: #bba98d;
+  --blood: #6f1726;
+  --aether: #4fd6ff;
+  --card-edge: rgba(255, 220, 146, 0.34);
 }
 
 * {

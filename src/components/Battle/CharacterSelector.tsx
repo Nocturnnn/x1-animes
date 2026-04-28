@@ -1,3 +1,4 @@
+import { memo, useMemo } from "react";
 import { Dices, Filter } from "lucide-react";
 import type { Character } from "../../types";
 import { CharacterCard } from "../CharacterCard/CharacterCard";
@@ -13,7 +14,7 @@ type CharacterSelectorProps = {
   onRandomize: () => void;
 };
 
-export function CharacterSelector({
+export const CharacterSelector = memo(function CharacterSelector({
   characters,
   selectedA,
   selectedB,
@@ -22,8 +23,11 @@ export function CharacterSelector({
   onSelect,
   onRandomize,
 }: CharacterSelectorProps) {
-  const animes = ["Todos", ...Array.from(new Set(characters.map((character) => character.anime)))];
-  const visibleCharacters = animeFilter === "Todos" ? characters : characters.filter((character) => character.anime === animeFilter);
+  const animes = useMemo(() => ["Todos", ...Array.from(new Set(characters.map((character) => character.anime)))], [characters]);
+  const visibleCharacters = useMemo(
+    () => (animeFilter === "Todos" ? characters : characters.filter((character) => character.anime === animeFilter)),
+    [animeFilter, characters],
+  );
 
   return (
     <section className="selector-section">
@@ -60,10 +64,11 @@ export function CharacterSelector({
             key={character.id}
             character={character}
             selected={selectedA?.id === character.id || selectedB?.id === character.id}
-            onClick={() => onSelect(character)}
+            animated={false}
+            onSelect={onSelect}
           />
         ))}
       </div>
     </section>
   );
-}
+});

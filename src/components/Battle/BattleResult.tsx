@@ -45,7 +45,7 @@ export function BattleResult({ result, characterA, characterB, onReset }: Battle
               <div>
                 <h3>Motivos</h3>
                 <ul className="reason-list">
-                  {result.reasons.slice(0, 7).map((reason) => (
+                  {result.reasons.slice(0, 12).map((reason) => (
                     <li key={reason}>{reason}</li>
                   ))}
                 </ul>
